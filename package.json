@@ -1,0 +1,43 @@
+{
+  "name": "markdown-it-colorful",
+  "version": "1.0.0",
+  "description": "Plugin for markdown-it to add colorful text",
+  "type": "module",
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "rolldown -c rolldown.config.js"
+  },
+  "keywords": [
+    "markdown-it-plugin",
+    "markdown-it",
+    "colorful",
+    "background-color",
+    "color",
+    "highlight"
+  ],
+  "files": [
+    "index.mjs",
+    "dist/"
+  ],
+  "main": "dist/index.cjs.js",
+  "module": "index.mjs",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs.js",
+      "import": "./index.mjs"
+    },
+    "./*": {
+      "require": "./*",
+      "import": "./*"
+    }
+  },
+  "author": "maonianyou",
+  "repository": "https://github.com/CoderMonkie/markdown-it-colorful.git",
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-terser": "^0.4.4",
+    "rimraf": "^6.0.1",
+    "rolldown": "1.0.0-beta.1"
+  }
+}
