@@ -6,9 +6,12 @@
 
 ## Usage
 
+> format changed since v2.0.0
+>> ::colorful_green_white text::
+
 ### 使用`umd`直接引入
 
-[![pEpYZDS.png](https://s21.ax1x.com/2025/01/03/pEpYZDS.png)](https://imgse.com/i/pEpYZDS)
+[![pE9wqAK.png](https://s21.ax1x.com/2025/01/06/pE9wqAK.png)](https://imgse.com/i/pE9wqAK)
 
 全局变量名为`markdownitcolorful`
 
@@ -25,17 +28,15 @@
   <script src="https://cdn.jsdelivr.net/npm/markdown-it-colorful/dist/markdown-it-colorful.min.js"></script>
   <script>
     window.addEventListener('load', function() {
-      console.log('window load', markdownitcolorful)
-      console.log('markdownit', markdownit)
       // markdown-it 变量名为 markdownit
       var md = markdownit()
       // md.use(markdownitcolorful, { bgColor: 'green', color: 'white'})
       md.use(markdownitcolorful)
 
       var mdContent = `
-# :colorful_red_white markdown::colorful_green_white -it-::colorful_blue_white colorful:
-## :colorful__gray In The Browser:
-### :colorful__#1E90FF 行内::colorful_#F08080 文字::colorful_#ADFF2F_#001a1a 彩色::colorful_#87CEFA_#FF8C00 高亮::colorful_green_white 美化:      
+# ::colorful_red_white markdown::::colorful_green_white -it-::::colorful_blue_white colorful::
+## ::colorful__gray In The Browser::
+### ::colorful__#1E90FF 行内::::colorful_#F08080 文字::::colorful_#ADFF2F_#001a1a *彩色*::::colorful_#87CEFA_#FF8C00 **高亮**::::colorful_green_white 美化::
       `.trim();
 
       document.getElementById('content').innerHTML = md.render(mdContent)
@@ -67,13 +68,21 @@ md.use(colorful, {
 md.use(colorful)
 ```
 
+> 这里配置默认颜色值可以为格式任意，包括`#00000066` `#f1f1f1` `green` `var(--theme-color)`等。
+
 在`markdown`文本内容中：
 
 ``` text
 :colorful_aliceblue_#ddd 行内文字颜色美化:
 ```
 
-使用格式`:colorful_背景色_前景色 文字:`，`_背景色`与`_前景色`都可以不传使用默认值（`md.use`时传入的`options`）。
+使用格式`::colorful_背景色_前景色 任意文字内容::`，`_背景色`与`_前景色`都可以不传使用默认值（`md.use`时传入的`options`）。
+
+这里支持的颜色值格式包括：
+
+- 十六进制颜色值（3位或6位），如`#fff`、`#ffffff`、`#000`、`#000000`
+- 十六进制颜色值包含透明度的（8位），如`#ffffff1a`、`#0000001a`
+- 颜色名称，如`red`、`green`、`blue`
 
 ## API
 
@@ -85,16 +94,18 @@ md.use(colorful)
 |--|--|--|--|--|
 |color|String|no|null|前景色|
 |bgColor|String|no|null|背景色|
+|skipWhenNoStyle|Boolean|no|false|没有配置颜色值时仍渲染出 span 元素(`class="colorful"`)，否则跳过本插件的渲染|
 
-当使用`:colorful_bgColor_color :`传入时，优先使用传入的颜色；  
-当使用`:colorful :`未传入时，使用`options`配置的默认颜色；
+- 当使用`:colorful_bgColor_color :`传入值时，优先使用传入的颜色；  
+- 当使用`:colorful :`未传入值时，使用`options`配置的默认颜色；
 
-渲染为`html`的`span`：
+渲染为`span`标签：
 
 ```html
-<span style="background-color:green;color:white;">文字</span>
+<span class="colorful" style="background-color:green;color:white;">文字</span>
 ```
 
-当既没有默认颜色值，也没有在使用中传入时，不做处理，原文字返回。
+- 当既没有配置默认颜色值，也没有在使用中传入，`skipWhenNoStyle`设为`false`时，仍会渲染出`span`元素
+- 当既没有配置默认颜色值，也没有在使用中传入，`skipWhenNoStyle`设为`true`时，不做特别渲染处理，继续处理内部文字
 
 ---

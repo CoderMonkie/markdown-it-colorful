@@ -11,17 +11,15 @@
   <script src="https://cdn.jsdelivr.net/npm/markdown-it-colorful/dist/markdown-it-colorful.min.js"></script>
   <script>
     window.addEventListener('load', function() {
-      console.log('window load', markdownitcolorful)
-      console.log('markdownit', markdownit)
       // markdown-it 变量名为 markdownit
       var md = markdownit()
       // md.use(markdownitcolorful, { bgColor: 'green', color: 'white'})
       md.use(markdownitcolorful)
 
       var mdContent = `
-# :colorful_red_white markdown::colorful_green_white -it-::colorful_blue_white colorful:
-## :colorful__gray In The Browser:
-### :colorful__#1E90FF 行内::colorful_#F08080 文字::colorful_#ADFF2F_#001a1a 彩色::colorful_#87CEFA_#FF8C00 高亮::colorful_green_white 美化:      
+# ::colorful_red_white markdown::::colorful_green_white -it-::::colorful_blue_white colorful::
+## ::colorful__gray In The *Br**ow**ser*::
+### ::colorful__#1E90FF 行内::::colorful_#F08080 文字::::colorful_#ADFF2F_#001a1a *彩色*::::colorful_#87CEFA_#FF8C00 **高亮**::::colorful_green_white 美化::
       `.trim();
 
       document.getElementById('content').innerHTML = md.render(mdContent)

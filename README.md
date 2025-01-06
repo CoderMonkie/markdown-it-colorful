@@ -6,9 +6,12 @@ A plugin for `markdown-it` used to set background and foreground colors for inli
 
 ## Usage
 
+> format changed since v2.0.0
+>> ::colorful_green_white text::
+
 ### Using `umd` in the browser
 
-[![pEpYZDS.png](https://s21.ax1x.com/2025/01/03/pEpYZDS.png)](https://imgse.com/i/pEpYZDS)
+[![pE9wqAK.png](https://s21.ax1x.com/2025/01/06/pE9wqAK.png)](https://imgse.com/i/pE9wqAK)
 
 The global variable name is `markdownitcolorful`.
 
@@ -25,17 +28,15 @@ The global variable name is `markdownitcolorful`.
   <script src="https://cdn.jsdelivr.net/npm/markdown-it-colorful/dist/markdown-it-colorful.min.js"></script>
   <script>
     window.addEventListener('load', function() {
-      console.log('window load', markdownitcolorful)
-      console.log('markdownit', markdownit)
       // The markdown-it variable name is markdownit
       var md = markdownit()
       // md.use(markdownitcolorful, { bgColor: 'green', color: 'white'})
       md.use(markdownitcolorful)
 
       var mdContent = `
-# :colorful_red_white markdown::colorful_green_white -it-::colorful_blue_white colorful:
-## :colorful__gray In The Browser:
-### :colorful__#1E90FF Inline::colorful_#F08080 Text::colorful_#ADFF2F_#001a1a Color::colorful_#87CEFA_#FF8C00 Highlight::colorful_green_white Beautify:      
+# ::colorful_red_white markdown::::colorful_green_white -it-::::colorful_blue_white colorful::
+## ::colorful__gray In The Browser::
+### ::colorful__#1E90FF Inline::::colorful_#F08080 Text::::colorful_#ADFF2F_#001a1a *Colorful*:: ::colorful_#87CEFA_#FF8C00 **Highlight**::::colorful_green_white Beautify::
       `.trim();
 
       document.getElementById('content').innerHTML = md.render(mdContent)
@@ -67,13 +68,21 @@ md.use(colorful, {
 md.use(colorful)
 ```
 
+> The default color value configured here can be in any format, including `#00000066`, `#f1f1f1`, `green`, `var(--theme-color)`, etc.
+
 In the `markdown` text content:
 
 ``` text
 :colorful_aliceblue_#ddd Inline Text Color Beautification:
 ```
 
-Usage format: `:colorful_backgroundColor_foregroundColor text:`, both `_backgroundColor` and `_foregroundColor` can be omitted to use the default values (specified in `md.use` options).
+Usage format: `::colorful_backgroundColor_foregroundColor arbitrary-text::`, both `_backgroundColor` and `_foregroundColor` can be omitted to use the default values specified in `md.use` options.
+
+The color value formats supported here include:
+
+- Hexadecimal color values (3 or 6 digits), such as `#fff`, `#ffffff`, `#000`, `#000000`
+- Hexadecimal color values with transparency (8 digits), such as `#ffffff1a`, `#0000001a`
+- Color names, such as `red`, `green`, `blue`
 
 ## API
 
@@ -81,20 +90,22 @@ Usage format: `:colorful_backgroundColor_foregroundColor text:`, both `_backgrou
 
 The `options` object is an optional parameter that can be used to configure default colors, eliminating the need to pass them in each time.
 
-| Property | Type | Required | Default Value | Description | 
+| Property | Type | Required | Default Value | Description |
 |--|--|--|--|--|
 |color|String|no|null|text color|
 |bgColor|String|no|null|background color|
+|skipWhenNoStyle|Boolean|no|true|When no color values are configured, skip the rendering of this plugin; otherwise, still render the span element with `class="colorful"`|
 
-When using `:colorful_bgColor_color :` to pass in colors, the passed-in colors are used preferentially;  
-when using `:colorful :` without passing in colors, the default colors configured in `options` are used.
+- When using `:colorful_bgColor_color :` to pass in colors, the passed-in colors are used preferentially;  
+- When using `:colorful :` without passing in colors, the default colors configured in `options` are used.
 
 The rendered `html` `span`:
 
 ```html
-<span style="background-color:green;color:white;">text</span>
+<span class="colorful" style="background-color:green;color:white;">text</span>
 ```
 
-When there are neither default color values nor passed-in colors during usage, no processing is done, and the original text is returned.
+- When there are neither default color values nor passed-in colors during usage, and `skipWhenNoStyle` is set to `false`, a `span` element will still be rendered.
+- When there are neither default color values nor passed-in colors during usage, and `skipWhenNoStyle` is set to `true`, no special rendering processing is performed by default, and continue processing the internal text.
 
 ---
