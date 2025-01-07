@@ -1,6 +1,6 @@
 {
   "name": "markdown-it-colorful",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Plugin for markdown-it to add colorful text",
   "type": "module",
   "scripts": {
