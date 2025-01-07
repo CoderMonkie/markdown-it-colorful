@@ -32,7 +32,14 @@
     }
   },
   "author": "maonianyou",
-  "repository": "https://github.com/CoderMonkie/markdown-it-colorful.git",
+  "homepage": "https://codermonkie.github.io/markdown-it-colorful/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CoderMonkie/markdown-it-colorful.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CoderMonkie/markdown-it-colorful/issues"
+  },
   "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-babel": "^6.0.4",
