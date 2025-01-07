@@ -73,7 +73,7 @@ md.use(colorful)
 In the `markdown` text content:
 
 ``` text
-:colorful_aliceblue_#ddd Inline Text Color Beautification:
+::colorful_aliceblue_#ddd Inline Text Color Beautification::
 ```
 
 Usage format: `::colorful_backgroundColor_foregroundColor arbitrary-text::`, both `_backgroundColor` and `_foregroundColor` can be omitted to use the default values specified in `md.use` options.
@@ -94,10 +94,10 @@ The `options` object is an optional parameter that can be used to configure defa
 |--|--|--|--|--|
 |color|String|no|null|text color|
 |bgColor|String|no|null|background color|
-|skipWhenNoStyle|Boolean|no|true|When no color values are configured, skip the rendering of this plugin; otherwise, still render the span element with `class="colorful"`|
+|skipWhenNoStyle|Boolean|no|false|When no color values are configured, skip the rendering of this plugin; otherwise, still render the span element with `class="colorful"`|
 
-- When using `:colorful_bgColor_color :` to pass in colors, the passed-in colors are used preferentially;  
-- When using `:colorful :` without passing in colors, the default colors configured in `options` are used.
+- When using `::colorful_bgColor_color ::` to pass in colors, the passed-in colors are used preferentially;  
+- When using `::colorful ::` without passing in colors, the default colors configured in `options` are used.
 
 The rendered `html` `span`:
 
@@ -109,3 +109,20 @@ The rendered `html` `span`:
 - When there are neither default color values nor passed-in colors during usage, and `skipWhenNoStyle` is set to `true`, no special rendering processing is performed by default, and continue processing the internal text.
 
 ---
+
+### Methods
+
+#### set
+
+The 'set' method is used to update single or multiple property values, such as the default color value of the initial configuration.
+
+```js
+md.use(colorful, {
+  color: '#f1f1f1',
+  bgColor: 'green'
+})
+
+colorful.set({ color: 'white'})
+
+// After `colorful.set` updates the property value, you'll need `md.render` to render your content again.
+```

@@ -7,7 +7,10 @@ function colorfulPlugin(md, options) {
   // 规则名称
   const COLORFUL = 'colorful';
 
-  const config = options || {};
+  const config = Object.assign(
+    { color: null, bgColor: null, skipWhenNoStyle: false },
+    options || {}
+  );
 
   this.set = function (newOpt = {}) {
     if (typeof newOpt !== 'object') return;

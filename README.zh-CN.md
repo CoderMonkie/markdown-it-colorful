@@ -73,7 +73,7 @@ md.use(colorful)
 在`markdown`文本内容中：
 
 ``` text
-:colorful_aliceblue_#ddd 行内文字颜色美化:
+::colorful_aliceblue_#ddd 行内文字颜色美化::
 ```
 
 使用格式`::colorful_背景色_前景色 任意文字内容::`，`_背景色`与`_前景色`都可以不传使用默认值（`md.use`时传入的`options`）。
@@ -86,7 +86,7 @@ md.use(colorful)
 
 ## API
 
-### options
+### options 配置项
 
 `options`对象为可选参数，可配置默认颜色，省去每次使用时传入
 
@@ -96,8 +96,8 @@ md.use(colorful)
 |bgColor|String|no|null|背景色|
 |skipWhenNoStyle|Boolean|no|false|没有配置颜色值时仍渲染出 span 元素(`class="colorful"`)，否则跳过本插件的渲染|
 
-- 当使用`:colorful_bgColor_color :`传入值时，优先使用传入的颜色；  
-- 当使用`:colorful :`未传入值时，使用`options`配置的默认颜色；
+- 当使用`::colorful_bgColor_color ::`传入值时，优先使用传入的颜色；  
+- 当使用`::colorful ::`未传入值时，使用`options`配置的默认颜色；
 
 渲染为`span`标签：
 
@@ -109,3 +109,20 @@ md.use(colorful)
 - 当既没有配置默认颜色值，也没有在使用中传入，`skipWhenNoStyle`设为`true`时，不做特别渲染处理，继续处理内部文字
 
 ---
+
+### 方法
+
+#### set
+
+`set`方法用来更新设置的默认颜色值等单个或多个属性值
+
+```js
+md.use(colorful, {
+  color: '#f1f1f1',
+  bgColor: 'green'
+})
+
+colorful.set({ color: 'white'})
+
+// `colorful.set` 更新属性值之后，需要 `md.render` 再次渲染你的内容
+```
