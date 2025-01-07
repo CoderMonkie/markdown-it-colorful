@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>MarkdownItColorful in the browser</title>
+  <style>
+    body {display: flex;justify-content: center;#content{text-align:center;}}
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #sectConfig {
+      padding: 12px;
+      border: 1px dashed lightgray;
+      margin-bottom: 16px;
+      display: flex;
+    }
+    #sectConfig input {
+      outline: none;
+    }
+    #content {
+      width: 600px;
+    }
+    textarea {
+      min-width: 800px;
+      height: 200px;
+      outline: 1px solid #4a98f7;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div id="content"></div>
+
+    <hr style="border-top:1px solid #e6e6e6;width:100%;">
+    <section id="sectConfig">
+      <div style="margin-right: 12px;">
+        <input type="radio" id="defaultColors" name="colorConfig" value="default" checked>
+        <label for="defaultColors">Using default colors</label><br>
+        <div style="padding-left: 24px">
+          <input type="text" id="bgColorInput" placeholder="bgColor" value="aliceblue"><br>
+          <input type="text" id="colorInput" placeholder="color" value="#a0a0a0">
+        </div>
+      </div>
+
+      <div>
+        <input type="radio" id="noDefaultColors" name="colorConfig" value="custom">
+        <label for="noDefaultColors">Not use</label><br>
+      </div>
+      
+    </section>
+
+    <section id="sectInput">
+      <textarea id="mdInput" oninput="onInput(this.value)"></textarea>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markdown-it-colorful/dist/markdown-it-colorful.min.js"></script>
+  <script>
+    var md = null;
+    function onInput(v) {
+      document.getElementById('content').innerHTML = md.render(v)
+    }
+    function onConfigChange(cfg) {
+      var input = document.getElementById('mdInput')
+      markdownitcolorful.set(cfg)
+      onInput(input.value)
+    }
+    window.addEventListener('load', function() {
+      var defaultColorsRadio = document.getElementById('defaultColors');
+      var noDefaultColorsRadio = document.getElementById('noDefaultColors');
+      var bgColorInput = document.getElementById('bgColorInput');
+      var colorInput = document.getElementById('colorInput');
+
+      var config = defaultColorsRadio.checked ? {
+        color: colorInput.value,
+        bgColor: bgColorInput.value,
+      } : null;
+
+      // markdown-it 变量名为 markdownit
+      // md.use(markdownitcolorful, { bgColor: 'green', color: 'white'})
+      md = markdownit();
+      md.use(markdownitcolorful, config);
+
+      var mdContent = `
+# ::colorful_red_white markdown::::colorful_green_white -it-::::colorful_blue_white colorful::\n
+## ::colorful__gray In The *Br**ow**ser*::\n
+### ::colorful__#1E90FF 行内::::colorful_#F08080 文字::::colorful_#ADFF2F_#001a1a *彩色*::::colorful_#87CEFA_#FF8C00 **高亮**::::colorful_green_white 美化::
+
+::colorful **No** *Colors* Specified | According to whether using default::\n
+      `.trim();
+
+      var input = document.getElementById('mdInput')
+      input.value = mdContent
+      input.dispatchEvent(new Event('input'))
+
+      // 添加事件监听器以处理单选按钮的选中状态
+      defaultColorsRadio.addEventListener('change', function() {
+        if (this.checked) {
+          bgColorInput.disabled = false;
+          colorInput.disabled = false;
+          onConfigChange({
+            color: colorInput.value,
+            bgColor: bgColorInput.value,
+          });
+        }
+      });
+
+      noDefaultColorsRadio.addEventListener('change', function() {
+        if (this.checked) {
+          bgColorInput.disabled = true;
+          colorInput.disabled = true;
+          onConfigChange({color: '', bgColor: ''});
+        }
+      });
+
+      bgColorInput.addEventListener('change', function() {
+        onConfigChange({bgColor: this.value});
+      });
+      colorInput.addEventListener('change', function() {
+        onConfigChange({color: this.value});
+      });
+    })
+  </script>
+</body>
+</html>
