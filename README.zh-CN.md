@@ -4,6 +4,8 @@
 
 `markdown-it` 的插件，用来给行内文字设置背景色、前景色，比如荧光笔效果等，实现行内文字彩色高亮美化。
 
+[Live Demo](https://codermonkie.github.io/markdown-it-colorful/)
+
 ## Usage
 
 > format changed since v2.0.0

@@ -4,6 +4,8 @@
 
 A plugin for `markdown-it` used to set background and foreground colors for inline text, such as highlighter effects, to achieve inline text color highlighting and beautification.
 
+[Live Demo](https://codermonkie.github.io/markdown-it-colorful/)
+
 ## Usage
 
 > format changed since v2.0.0
